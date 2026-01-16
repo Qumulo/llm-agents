@@ -39,38 +39,21 @@ def get_all_packages_metadata() -> dict[str, dict[str, str | bool | None]]:
     return {k: v for k, v in data.items() if v is not None}
 
 
-def generate_package_doc(package: str, metadata: dict[str, str | bool | None]) -> str:
-    """Generate markdown documentation for a package."""
-    lines = []
+MAX_DESCRIPTION_LENGTH = 80
+
+
+def generate_package_row(package: str, metadata: dict[str, str | bool | None]) -> str:
+    """Generate a table row for a package."""
     description = metadata.get("description", "No description available")
-    lines.append("<details>")
-    lines.append(f"<summary><strong>{package}</strong> - {description}</summary>")
-    lines.append("")
-    lines.append(f"- **Source**: {metadata.get('sourceType', 'unknown')}")
-    lines.append(f"- **License**: {metadata.get('license', 'Check package')}")
-
-    homepage = metadata.get("homepage")
+    # Truncate long descriptions for table readability
+    if len(description) > MAX_DESCRIPTION_LENGTH:
+        description = description[: MAX_DESCRIPTION_LENGTH - 3] + "..."
+    license_info = metadata.get("license", "Check package")
+    homepage = metadata.get("homepage", "")
+    pkg_link = f"[{package}](packages/{package}/package.nix)"
     if homepage:
-        lines.append(f"- **Homepage**: {homepage}")
-
-    lines.append(
-        f"- **Usage**: `nix run github:numtide/llm-agents.nix#{package} -- --help`"
-    )
-    lines.append(
-        f"- **Nix**: [packages/{package}/package.nix](packages/{package}/package.nix)"
-    )
-
-    # Check for package-specific README
-    readme_path = Path(f"packages/{package}/README.md")
-    if readme_path.exists():
-        lines.append(
-            f"- **Documentation**: See [packages/{package}/README.md]"
-            f"(packages/{package}/README.md) for detailed usage"
-        )
-
-    lines.append("")
-    lines.append("</details>")
-    return "\n".join(lines)
+        pkg_link = f"[{package}]({homepage})"
+    return f"| {pkg_link} | {description} | {license_info} |"
 
 
 # Define category order for display
@@ -88,6 +71,21 @@ CATEGORY_ORDER = [
 ]
 
 
+def generate_category_table(
+    category: str, packages: list[tuple[str, dict]]
+) -> list[str]:
+    """Generate a markdown table for a category of packages."""
+    lines = [
+        f"### {category}",
+        "",
+        "| Package | Description | License |",
+        "|---------|-------------|---------|",
+    ]
+    for package, metadata in packages:
+        lines.append(generate_package_row(package, metadata))
+    return lines
+
+
 def generate_all_docs() -> str:
     """Generate documentation for all packages, grouped by category."""
     all_metadata = get_all_packages_metadata()
@@ -101,24 +99,20 @@ def generate_all_docs() -> str:
             by_category[category] = []
         by_category[category].append((package, metadata))
 
-    docs = []
+    docs: list[str] = []
 
     # Output categories in defined order, then any remaining
     seen_categories: set[str] = set()
     for category in CATEGORY_ORDER:
         if category in by_category:
             seen_categories.add(category)
-            docs.append(f"### {category}\n")
-            for package, metadata in by_category[category]:
-                docs.append(generate_package_doc(package, metadata))
+            docs.extend(generate_category_table(category, by_category[category]))
             docs.append("")  # Add spacing between categories
 
     # Handle any categories not in CATEGORY_ORDER
     for category in sorted(by_category.keys()):
         if category not in seen_categories:
-            docs.append(f"### {category}\n")
-            for package, metadata in by_category[category]:
-                docs.append(generate_package_doc(package, metadata))
+            docs.extend(generate_category_table(category, by_category[category]))
             docs.append("")
 
     return "\n".join(docs).rstrip()
