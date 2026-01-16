@@ -32,40 +32,35 @@ def all-packages-metadata [nix_file: string]: nothing -> table {
   | sort-by package
 }
 
-def package-doc [package: string, meta: record]: nothing -> string {
-  let description = ($meta.description? | default "No description available")
-  let source = ($meta.sourceType? | default "unknown")
+# Truncate long descriptions for table readability.
+const MAX_DESCRIPTION_LENGTH = 80
+
+# Render one package's table row.
+def package-row [package: string, meta: record]: nothing -> string {
+  mut description = ($meta.description? | default "No description available")
+  if ($description | str length) > $MAX_DESCRIPTION_LENGTH {
+    $description = (($description | str substring 0..<($MAX_DESCRIPTION_LENGTH - 3)) + "...")
+  }
   let license = ($meta.license? | default "Check package")
+  let homepage = ($meta.homepage? | default "")
 
-  mut lines = [
-    "<details>"
-    $"<summary><strong>($package)</strong> - ($description)</summary>"
-    ""
-    $"- **Source**: ($source)"
-    $"- **License**: ($license)"
-  ]
-
-  let homepage = ($meta.homepage? | default null)
-  if $homepage != null and $homepage != "" {
-    $lines = ($lines | append $"- **Homepage**: ($homepage)")
-  }
-
-  $lines = ($lines | append $"- **Usage**: `nix run github:numtide/llm-agents.nix#($package) -- --help`")
   # \( because an unescaped ( in an interpolated string opens a subexpression
-  $lines = ($lines | append $"- **Nix**: [packages/($package)/package.nix]\(packages/($package)/package.nix\)")
-
-  if ($"packages/($package)/README.md" | path exists) {
-    $lines = ($lines | append $"- **Documentation**: See [packages/($package)/README.md]\(packages/($package)/README.md\) for detailed usage")
+  let pkg_link = if $homepage != "" {
+    $"[($package)]\(($homepage)\)"
+  } else {
+    $"[($package)]\(packages/($package)/package.nix\)"
   }
-
-  $lines = ($lines | append "")
-  $lines = ($lines | append "</details>")
-  $lines | str join "\n"
+  $"| ($pkg_link) | ($description) | ($license) |"
 }
 
 def category-block [category: string, rows: table]: nothing -> list<string> {
-  [$"### ($category)\n"]
-  | append ($rows | each {|r| package-doc $r.package $r.meta })
+  [
+    $"### ($category)"
+    ""
+    "| Package | Description | License |"
+    "|---------|-------------|---------|"
+  ]
+  | append ($rows | each {|r| package-row $r.package $r.meta })
   | append ""
 }
 
