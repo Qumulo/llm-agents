@@ -11,28 +11,28 @@ Nix packages for AI coding agents and development tools. Fork of [numtide/llm-ag
 | Package | Description | License |
 |---------|-------------|---------|
 | [amp](https://ampcode.com/) | CLI for Amp, an agentic coding tool in research preview from Sourcegraph | unfree |
-| [bernstein](https://github.com/chernistry/bernstein) | Multi-agent orchestrator for CLI coding agents — spawn, coordinate, and manag... | Apache-2.0 |
-| [claude-code](https://claude.ai/code) | Agentic coding tool that lives in your terminal, understands your codebase, a... | unfree |
+| [bernstein](https://github.com/chernistry/bernstein) | Multi-agent orchestrator for CLI coding agents — spawn, coordinate, and manage parallel AI agents | Apache-2.0 |
+| [claude-code](https://claude.ai/code) | Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster | unfree |
 | [claw-code](https://github.com/ultraworkers/claw-code) | Claude Code rewrite CLI built from the official claw-code Rust workspace | MIT |
-| [cli-proxy-api](https://github.com/router-for-me/CLIProxyAPI) | Unified proxy providing OpenAI/Gemini/Claude/Codex compatible APIs for AI cod... | MIT |
+| [cli-proxy-api](https://github.com/router-for-me/CLIProxyAPI) | Unified proxy providing OpenAI/Gemini/Claude/Codex compatible APIs for AI coding CLI tools | MIT |
 | [code](https://github.com/just-every/code/) | Fork of codex. Orchestrate agents from OpenAI, Claude, Gemini or any provider. | Apache-2.0 |
 | [codex](https://github.com/openai/codex) | OpenAI Codex CLI - a coding agent that runs locally on your computer | Apache-2.0 |
-| [copilot-cli](https://github.com/github/copilot-cli) | GitHub Copilot CLI brings the power of Copilot coding agent directly to your ... | unfree |
+| [copilot-cli](https://github.com/github/copilot-cli) | GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal. | unfree |
 | [crush](https://github.com/charmbracelet/crush) | The glamourous AI coding agent for your favourite terminal | MIT |
 | [cursor-agent](https://cursor.com/) | Cursor Agent - CLI tool for Cursor AI code editor | unfree |
 | [droid](https://factory.ai) | Factory AI's Droid - AI-powered development agent for your terminal | unfree |
-| [eca](https://github.com/editor-code-assistant/eca) | Editor Code Assistant (ECA) - AI pair programming capabilities agnostic of ed... | Apache-2.0 |
-| [forge](https://github.com/antinomyhq/forge) | AI-Enhanced Terminal Development Environment - A comprehensive coding agent t... | MIT |
+| [eca](https://github.com/editor-code-assistant/eca) | Editor Code Assistant (ECA) - AI pair programming capabilities agnostic of editor | Apache-2.0 |
+| [forge](https://github.com/antinomyhq/forge) | AI-Enhanced Terminal Development Environment - A comprehensive coding agent that integrates AI capabilities with your development environment | MIT |
 | [gemini-cli](https://github.com/google-gemini/gemini-cli) | AI agent that brings the power of Gemini directly into your terminal | Apache-2.0 |
 | [gitnexus](https://github.com/abhigyanpatwari/GitNexus) | Graph-powered code intelligence for AI agents | unfree |
-| [goose-cli](https://github.com/block/goose) | CLI for Goose - a local, extensible, open source AI agent that automates engi... | Apache-2.0 |
+| [goose-cli](https://github.com/block/goose) | CLI for Goose - a local, extensible, open source AI agent that automates engineering tasks | Apache-2.0 |
 | [iflow-cli](https://github.com/iflow-ai/iflow-cli) | AI coding agent for the terminal with free model access via the iFlow platform | Apache-2.0 |
 | [jules](https://jules.google) | Jules, the asynchronous coding agent from Google, in the terminal | unfree |
 | [junie](https://github.com/JetBrains/junie) | Junie, JetBrains AI coding agent CLI | unfree |
 | [kilocode-cli](https://kilocode.ai/cli) | The open-source AI coding agent. Now available in your terminal. | Apache-2.0 |
 | [letta-code](https://github.com/letta-ai/letta-code) | Memory-first coding agent that learns and evolves across sessions | Apache-2.0 |
-| [mistral-vibe](https://github.com/mistralai/mistral-vibe) | Minimal CLI coding agent by Mistral AI - open-source command-line coding assi... | Apache-2.0 |
-| [nanocoder](https://github.com/Mote-Software/nanocoder) | A beautiful local-first coding agent running in your terminal - built by the ... | MIT |
+| [mistral-vibe](https://github.com/mistralai/mistral-vibe) | Minimal CLI coding agent by Mistral AI - open-source command-line coding assistant powered by Devstral | Apache-2.0 |
+| [nanocoder](https://github.com/Mote-Software/nanocoder) | A beautiful local-first coding agent running in your terminal - built by the community for the community ⚒ | MIT |
 | [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex) | Multi-agent orchestration layer for OpenAI Codex CLI | MIT |
 | [oh-my-opencode](https://github.com/code-yeongyu/oh-my-openagent) | The Best AI Agent Harness - Multi-Model Orchestration for OpenCode | unfree |
 | [omp](https://github.com/can1357/oh-my-pi) | A terminal-based coding agent with multi-model support | MIT |
@@ -46,10 +46,10 @@ Nix packages for AI coding agents and development tools. Fork of [numtide/llm-ag
 
 | Package | Description | License |
 |---------|-------------|---------|
-| [hermes-agent](https://hermes-agent.nousresearch.com/) | Self-improving AI agent by Nous Research — creates skills from experience and... | MIT |
-| [localgpt](https://github.com/localgpt-app/localgpt) | Local AI assistant with persistent markdown memory, autonomous tasks, and sem... | Apache-2.0 |
+| [hermes-agent](https://hermes-agent.nousresearch.com/) | Self-improving AI agent by Nous Research — creates skills from experience and runs anywhere | MIT |
+| [localgpt](https://github.com/localgpt-app/localgpt) | Local AI assistant with persistent markdown memory, autonomous tasks, and semantic search | Apache-2.0 |
 | [openclaw](https://openclaw.ai) | Your own personal AI assistant. Any OS. Any Platform. The lobster way | MIT |
-| [picoclaw](https://picoclaw.io) | Tiny, fast, and deployable anywhere — automate the mundane, unleash your crea... | MIT |
+| [picoclaw](https://picoclaw.io) | Tiny, fast, and deployable anywhere — automate the mundane, unleash your creativity | MIT |
 | [zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) | Fast, small, and fully autonomous AI assistant infrastructure | MIT / Apache-2.0 |
 
 ### Claude Code Ecosystem
@@ -58,21 +58,21 @@ Nix packages for AI coding agents and development tools. Fork of [numtide/llm-ag
 |---------|-------------|---------|
 | [auto-claude](https://github.com/AndyMik90/Auto-Claude) | Autonomous multi-agent coding framework powered by Claude AI | AGPL-3.0-only |
 | [catnip](https://github.com/wandb/catnip) | Developer environment that's like catnip for agentic programming | Apache-2.0 |
-| [cc-switch-cli](https://github.com/SaladDay/cc-switch-cli) | CLI version of CC Switch - All-in-One Assistant for Claude Code, Codex & Gemi... | MIT |
+| [cc-switch-cli](https://github.com/SaladDay/cc-switch-cli) | CLI version of CC Switch - All-in-One Assistant for Claude Code, Codex & Gemini CLI | MIT |
 | [ccstatusline](https://github.com/sirmalloc/ccstatusline) | A highly customizable status line formatter for Claude Code CLI | MIT |
-| [claude-code-router](https://github.com/musistudio/claude-code-router) | Use Claude Code without an Anthropics account and route it to another LLM pro... | MIT |
+| [claude-code-router](https://github.com/musistudio/claude-code-router) | Use Claude Code without an Anthropics account and route it to another LLM provider | MIT |
 | [claude-plugins](https://github.com/Kamalnrf/claude-plugins) | CLI tool for managing Claude Code plugins | MIT |
 | [claudebox](https://github.com/numtide/claudebox) | Sandboxed environment for Claude Code | Check package |
 | [oh-my-claudecode](https://github.com/yeachan-heo/oh-my-claudecode) | Multi-agent orchestration system for Claude Code | MIT |
 | [sandbox-runtime](https://github.com/anthropic-experimental/sandbox-runtime) | Lightweight sandboxing tool for enforcing filesystem and network restrictions | Apache-2.0 |
-| [skills](https://github.com/vercel-labs/skills) | The open agent skills tool for installing and managing skills across AI codin... | MIT |
+| [skills](https://github.com/vercel-labs/skills) | The open agent skills tool for installing and managing skills across AI coding agents | MIT |
 | [skills-installer](https://github.com/Kamalnrf/claude-plugins) | Install agent skills across multiple AI coding clients | MIT |
 
 ### ACP Ecosystem
 
 | Package | Description | License |
 |---------|-------------|---------|
-| [claude-code-acp](https://github.com/zed-industries/claude-code-acp) | An ACP-compatible coding agent powered by the Claude Code SDK (TypeScript) | Apache-2.0 |
+| [claude-agent-acp](https://github.com/agentclientprotocol/claude-agent-acp) | An ACP-compatible coding agent powered by the Claude Code SDK (TypeScript) | Apache-2.0 |
 | [codex-acp](https://github.com/zed-industries/codex-acp) | An ACP-compatible coding agent powered by Codex | Apache-2.0 |
 
 ### Usage Analytics
@@ -91,7 +91,7 @@ Nix packages for AI coding agents and development tools. Fork of [numtide/llm-ag
 | Package | Description | License |
 |---------|-------------|---------|
 | [agent-deck](https://github.com/asheshgoplani/agent-deck) | Your AI agent command center | MIT |
-| [backlog-md](https://github.com/MrLesk/Backlog.md) | Backlog.md - A tool for managing project collaboration between humans and AI ... | MIT |
+| [backlog-md](https://github.com/MrLesk/Backlog.md) | Backlog.md - A tool for managing project collaboration between humans and AI Agents in a git ecosystem | MIT |
 | [beads](https://github.com/steveyegge/beads) | A distributed issue tracker designed for AI-supervised coding workflows | MIT |
 | [beads-rust](https://github.com/Dicklesworthstone/beads_rust) | Fast Rust port of beads - a local-first issue tracker for git repositories | MIT |
 | [beads-viewer](https://github.com/Dicklesworthstone/beads_viewer) | Graph-aware TUI for the Beads issue tracker | MIT |
@@ -103,15 +103,15 @@ Nix packages for AI coding agents and development tools. Fork of [numtide/llm-ag
 | [openspecui](https://github.com/jixoai/openspecui) | Visual interface for spec-driven development | MIT |
 | [ralph-tui](https://github.com/subsy/ralph-tui) | AI Agent Loop Orchestrator TUI | MIT |
 | [sidecar](https://github.com/marcus/sidecar) | Terminal-based development companion for AI coding agents | MIT |
-| [spec-kit](https://github.com/github/spec-kit) | Specify CLI, part of GitHub Spec Kit. A tool to bootstrap your projects for S... | MIT |
-| [vibe-kanban](https://github.com/BloopAI/vibe-kanban) | Kanban board to orchestrate AI coding agents like Claude Code, Codex, and Gem... | Apache-2.0 |
+| [spec-kit](https://github.com/github/spec-kit) | Specify CLI, part of GitHub Spec Kit. A tool to bootstrap your projects for Spec-Driven Development (SDD) | MIT |
+| [vibe-kanban](https://github.com/BloopAI/vibe-kanban) | Kanban board to orchestrate AI coding agents like Claude Code, Codex, and Gemini CLI | Apache-2.0 |
 | [workmux](https://github.com/raine/workmux) | Git worktrees + tmux windows for zero-friction parallel dev | MIT |
 
 ### Code Review
 
 | Package | Description | License |
 |---------|-------------|---------|
-| [code-review-graph](https://github.com/tirth8205/code-review-graph) | Local knowledge graph for AI coding agents — builds persistent map of your co... | MIT |
+| [code-review-graph](https://github.com/tirth8205/code-review-graph) | Local knowledge graph for AI coding agents — builds persistent map of your codebase for token-efficient code reviews | MIT |
 | [coderabbit-cli](https://coderabbit.ai) | AI-powered code review CLI tool | unfree |
 | [tuicr](https://github.com/agavra/tuicr) | Review AI-generated diffs like a GitHub pull request, right from your terminal | MIT |
 
@@ -121,24 +121,25 @@ Nix packages for AI coding agents and development tools. Fork of [numtide/llm-ag
 |---------|-------------|---------|
 | [agent-browser](https://github.com/vercel-labs/agent-browser) | Headless browser automation CLI for AI agents | Apache-2.0 |
 | [apm](https://github.com/microsoft/apm) | Agent Package Manager — dependency manager for AI agents | MIT |
-| [ck](https://github.com/BeaconBay/ck) | Local first semantic and hybrid BM25 grep / search tool for use by AI and hum... | MIT |
+| [ck](https://github.com/BeaconBay/ck) | Local first semantic and hybrid BM25 grep / search tool for use by AI and humans! | MIT |
+| [context-hub](https://github.com/andrewyng/context-hub) | CLI for Context Hub - search and retrieve LLM-optimized docs and skills | MIT |
 | [copilot-language-server](https://github.com/github/copilot-language-server-release) | GitHub Copilot Language Server - AI pair programmer LSP | MIT |
 | [entire](https://github.com/entireio/cli) | CLI tool that captures AI agent sessions and links them to code changes | MIT |
-| [fence](https://fencesandbox.com/) | Lightweight, container-free sandbox for running commands with network and fil... | Apache-2.0 |
+| [fence](https://fencesandbox.com/) | Lightweight, container-free sandbox for running commands with network and filesystem restrictions | Apache-2.0 |
 | [git-surgeon](https://github.com/raine/git-surgeon) | Git primitives for autonomous coding agents | MIT |
-| [gitagent](https://github.com/open-gitagent/gitagent) | Framework-agnostic, git-native standard for defining AI agents | MIT |
-| [gno](https://github.com/gmickel/gno) | Local-first knowledge engine with hybrid search, RAG Q&A, and MCP server inte... | MIT |
+| [gitclaw](https://github.com/open-gitagent/gitagent) | Universal git-native multimodal AI agent (formerly gitagent) | MIT |
+| [gno](https://github.com/gmickel/gno) | Local-first knowledge engine with hybrid search, RAG Q&A, and MCP server integration | MIT |
 | [handy](https://handy.computer/) | Fast and accurate local transcription app using AI models | MIT |
-| [happy-coder](https://github.com/slopus/happy) | Mobile and Web client for Codex and Claude Code, with realtime voice and encr... | MIT |
+| [happy-coder](https://github.com/slopus/happy) | Mobile and Web client for Codex and Claude Code, with realtime voice and encryption | MIT |
 | [mcporter](https://github.com/steipete/mcporter) | TypeScript runtime and CLI for the Model Context Protocol | MIT |
-| [nono](https://nono.sh/) | Kernel-enforced agent sandbox. Capability-based isolation with secure key man... | Apache-2.0 |
-| [openskills](https://github.com/numman-ali/openskills) | Universal skills loader for AI coding agents - install and load Anthropic SKI... | Apache-2.0 |
+| [nono](https://nono.sh/) | Kernel-enforced agent sandbox. Capability-based isolation with secure key management, atomic rollback, cryptographic immutable audit chain of provenance. Run your agents in a zero-trust environment. | Apache-2.0 |
+| [openskills](https://github.com/numman-ali/openskills) | Universal skills loader for AI coding agents - install and load Anthropic SKILL.md format skills in any agent | Apache-2.0 |
 | [parallel-cli](https://github.com/parallel-web/parallel-web-tools) | AI-powered web search, extraction, and research CLI from Parallel | MIT |
-| [qmd](https://github.com/tobi/qmd) | mini cli search engine for your docs, knowledge bases, meeting notes, whateve... | MIT |
+| [qmd](https://github.com/tobi/qmd) | mini cli search engine for your docs, knowledge bases, meeting notes, whatever. Tracking current sota approaches while being all local | MIT |
 | [rtk](https://github.com/rtk-ai/rtk) | CLI proxy that reduces LLM token consumption by 60-90% on common dev commands | MIT |
 | [showboat](https://github.com/simonw/showboat) | Create executable demo documents showing and proving an agent's work | Apache-2.0 |
 | [toon](https://github.com/toon-format/toon-rust) | Rust implementation of TOON - Token-Oriented Object Notation for LLM prompts | MIT |
-| [zat](https://github.com/bglgwyng/zat) | Code outline viewer for LLM coding agents — shows exported symbols with line ... | GPL-3.0-only |
+| [zat](https://github.com/bglgwyng/zat) | Code outline viewer for LLM coding agents — shows exported symbols with line numbers | GPL-3.0-only |
 <!-- END GENERATED PACKAGE DOCS -->
 
 ## Installation
