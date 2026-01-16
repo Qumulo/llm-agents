@@ -32,15 +32,9 @@ def all-packages-metadata [nix_file: string]: nothing -> table {
   | sort-by package
 }
 
-# Truncate long descriptions for table readability.
-const MAX_DESCRIPTION_LENGTH = 80
-
 # Render one package's table row.
 def package-row [package: string, meta: record]: nothing -> string {
-  mut description = ($meta.description? | default "No description available")
-  if ($description | str length) > $MAX_DESCRIPTION_LENGTH {
-    $description = (($description | str substring 0..<($MAX_DESCRIPTION_LENGTH - 3)) + "...")
-  }
+  let description = ($meta.description? | default "No description available")
   let license = ($meta.license? | default "Check package")
   let homepage = ($meta.homepage? | default "")
 
