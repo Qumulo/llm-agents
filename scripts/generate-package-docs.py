@@ -39,15 +39,9 @@ def get_all_packages_metadata() -> dict[str, dict[str, str | bool | None]]:
     return {k: v for k, v in data.items() if v is not None}
 
 
-MAX_DESCRIPTION_LENGTH = 80
-
-
 def generate_package_row(package: str, metadata: dict[str, str | bool | None]) -> str:
     """Generate a table row for a package."""
     description = metadata.get("description", "No description available")
-    # Truncate long descriptions for table readability
-    if len(description) > MAX_DESCRIPTION_LENGTH:
-        description = description[: MAX_DESCRIPTION_LENGTH - 3] + "..."
     license_info = metadata.get("license", "Check package")
     homepage = metadata.get("homepage", "")
     pkg_link = f"[{package}](packages/{package}/package.nix)"
