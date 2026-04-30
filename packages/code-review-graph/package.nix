@@ -8,12 +8,10 @@ let
   python = python3.override {
     self = python;
     packageOverrides = _final: prev: {
-      # Transitive dep via fastmcp -> py-key-value-aio. Its dynamodb tests
-      # break against the moto/aiobotocore-3.x combo in current
-      # nixpkgs-unstable ("Duplicate 'Server' header"). Fixed upstream in
-      # NixOS/nixpkgs#513680; drop this override once that lands in our pin
-      # (tracking: numtide/llm-agents.nix#4343).
-      aioboto3 = prev.aioboto3.overridePythonAttrs { doCheck = false; };
+      # fastmcp test suite hangs on x86_64-linux with current nixpkgs pin
+      # (some async tests block past the 3h builder timeout). Skip checks
+      # since we only need it as a runtime dependency.
+      fastmcp = prev.fastmcp.overridePythonAttrs { doCheck = false; };
     };
   };
 
@@ -64,9 +62,12 @@ python.pkgs.buildPythonApplication rec {
     license = licenses.mit;
     sourceProvenance = with sourceTypes; [ fromSource ];
     maintainers = with maintainers; [ aldoborrero ];
-    # Transitive dependency `lupa` ships a pre-built LuaJIT that only links
-    # on x86_64, so we exclude aarch64-linux.
-    platforms = [ "x86_64-linux" ];
+    # x86_64-darwin excluded: no upstream CI / not validated.
+    platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+      "aarch64-darwin"
+    ];
     mainProgram = "code-review-graph";
   };
 }
