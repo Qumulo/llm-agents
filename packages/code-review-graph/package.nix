@@ -62,7 +62,12 @@ python.pkgs.buildPythonApplication rec {
     license = licenses.mit;
     sourceProvenance = with sourceTypes; [ fromSource ];
     maintainers = with maintainers; [ aldoborrero ];
-    platforms = platforms.unix;
+    # x86_64-darwin excluded: no upstream CI / not validated.
+    platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+      "aarch64-darwin"
+    ];
     mainProgram = "code-review-graph";
   };
 }
