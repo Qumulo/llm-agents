@@ -79,6 +79,14 @@ rustPlatform.buildRustPackage {
 
   env = {
     RUSTY_V8_ARCHIVE = librusty_v8;
+    # Cap concurrent rustc jobs to keep peak RSS bounded with ThinLTO on the
+    # 16 GiB aarch64 builder.
+    CARGO_BUILD_JOBS = "2";
+    # Drop debuginfo from the shipped binary; combined with ThinLTO this
+    # keeps the codex __TEXT segment well below the 128 MiB ARM64 branch
+    # limit on aarch64-darwin.
+    CARGO_PROFILE_RELEASE_DEBUG = "false";
+    CARGO_PROFILE_RELEASE_STRIP = "symbols";
   }
   // lib.optionalAttrs (livekitWebrtc != null) {
     LK_CUSTOM_WEBRTC = livekitWebrtc;
@@ -90,9 +98,11 @@ rustPlatform.buildRustPackage {
     # workspace members, codegen-units=1 makes each late-stage rustc hold the
     # whole crate's IR in one module (~2–2.5 GiB RSS for codex-core/-tui), so
     # `cargo -j$NIX_BUILD_CORES` peaks at ~12 GiB and OOMs our 16 GiB aarch64
-    # builder. Relax both; LTO off also keeps the link step cheap.
+    # builder. Use ThinLTO + 16 codegen-units instead: keeps memory bounded
+    # while shrinking __TEXT below the 128 MiB ARM64 branch range, which the
+    # default Mach-O linker hit on aarch64-darwin (#4417).
     substituteInPlace Cargo.toml \
-      --replace-fail 'lto = "fat"' 'lto = false' \
+      --replace-fail 'lto = "fat"' 'lto = "thin"' \
       --replace-fail 'codegen-units = 1' 'codegen-units = 16'
   '';
 
