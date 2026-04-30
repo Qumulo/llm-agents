@@ -36,14 +36,14 @@ let
 in
 python3.pkgs.buildPythonApplication rec {
   pname = "bernstein";
-  version = "1.8.15";
+  version = "1.9.2";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "chernistry";
     repo = "bernstein";
     tag = "v${version}";
-    hash = "sha256-+NACAsDt3Hqpf9vHNprkYA1wUJj6BKyQiNVKL3NM5wE=";
+    hash = "sha256-OhrbcGIf51ABFz5SjbV8cX5qKmSDzizMP57zgebbXnQ=";
   };
 
   # Upstream sometimes tags a release without bumping the version in
@@ -67,6 +67,7 @@ python3.pkgs.buildPythonApplication rec {
     defusedxml
     fastapi
     httpx
+    keyring
     mcp
     openai
     opentelemetry-api
