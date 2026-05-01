@@ -12,25 +12,6 @@ let
       # (some async tests block past the 3h builder timeout). Skip checks
       # since we only need it as a runtime dependency.
       fastmcp = prev.fastmcp.overridePythonAttrs { doCheck = false; };
-
-      # The pinned nixpkgs builds lupa with `LUPA_NO_BUNDLE` against system
-      # luajit, which only yields a single `lupa.lua` backend module.
-      # fakeredis (pulled in via fastmcp -> pydocket) hard-codes
-      # `lupa.lua51`, so `code-review-graph serve` blows up at startup
-      # (numtide/llm-agents.nix#4497). Upstream restored the versioned
-      # backends in NixOS/nixpkgs#514692 / #514916; drop this override once
-      # our nixpkgs pin includes those commits
-      # (tracking: numtide/llm-agents.nix#4509).
-      lupa = prev.lupa.overridePythonAttrs (old: {
-        src = old.src.override {
-          fetchSubmodules = true;
-          hash = "sha256-XLBUQ1TrzWWST9RJdMTnpsceldDNzidnL82bixLhSRA=";
-        };
-        env = { };
-        nativeBuildInputs = [ ];
-        buildInputs = [ ];
-        pythonImportsCheck = (old.pythonImportsCheck or [ ]) ++ [ "lupa.lua51" ];
-      });
     };
   };
 
@@ -65,18 +46,16 @@ python.pkgs.buildPythonApplication rec {
   ];
 
   # Relax version constraints — nixpkgs versions are newer but compatible.
+  # fastmcp: upstream v2.3.2 pins `<3` but main already moved to `>=3.2.4`
+  # (no API breaks for the tool/prompt decorators used here), so accept the
+  # nixpkgs 3.x build until the next tagged release.
   pythonRelaxDeps = [
+    "fastmcp"
     "tree-sitter-language-pack"
     "watchdog"
   ];
 
-  pythonImportsCheck = [
-    "code_review_graph"
-    # Regression test for numtide/llm-agents.nix#4497: the `serve` command
-    # pulls in fakeredis' Lua scripting support, which requires lupa to ship
-    # the version-suffixed `lupa.lua51` backend module.
-    "fakeredis.commands_mixins.scripting_mixin"
-  ];
+  pythonImportsCheck = [ "code_review_graph" ];
 
   passthru.category = "Code Review";
 
