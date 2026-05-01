@@ -11,16 +11,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "openfang";
-  version = "0.6.2";
+  version = "0.6.4";
 
   src = fetchFromGitHub {
     owner = "RightNow-AI";
     repo = "openfang";
     tag = "v${version}";
-    hash = "sha256-34gwd2+0pTjDm+tbpOJVLsDovaiSWfH/OVx18vVg4YE=";
+    hash = "sha256-8WaLLNDcFcR16crs2VOh1ySEb+K5Tp8BMa4D25nf6bI=";
   };
 
-  cargoHash = "sha256-51eY5J1ms1ZecdFAj/CTVriN6NC1a/L5nUmxQ2z3bOo=";
+  cargoHash = "sha256-scNoGbEFwz+cx0svmiJY1t1jOPoYw12zlKkl7DbzJN8=";
 
   cargoBuildFlags = [
     "--package"
