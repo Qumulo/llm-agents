@@ -15,18 +15,18 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "openclaw";
-  version = "2026.5.2";
+  version = "2026.5.3";
 
   src = fetchFromGitHub {
     owner = "openclaw";
     repo = "openclaw";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-Yq+T+mXhNtFQfgFkRACXB58YUfEDzKUgvL/8p6L7zKU=";
+    hash = "sha256-6WIjb/0dFuGPtXnzpUCrkZ7RYEiRttOTc9Jc0OKbfdE=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-8o0NGGr/z0EcXFfX9GpvEIitE5gDvv2yNOniPhyFlJQ=";
+    hash = "sha256-lu5ykH91YytflGi6OOx52jks5MaoSecs6nVIVjO4wtw=";
     fetcherVersion = 2;
   };
 
@@ -130,7 +130,7 @@ stdenv.mkDerivation (finalAttrs: {
     versionCheckHook
     versionCheckHomeHook
   ];
-  # Upstream tags may carry a "-N" rebuild suffix (e.g. v2026.5.2) while
+  # Upstream tags may carry a "-N" rebuild suffix (e.g. v2026.5.3) while
   # `openclaw --version` only reports the base version. Strip the suffix
   # before versionCheckHook compares it against the command output.
   preVersionCheck = ''
