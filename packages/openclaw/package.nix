@@ -58,15 +58,6 @@ stdenv.mkDerivation (finalAttrs: {
     fi
     mkdir -p node_modules/.pnpm/node_modules
     ln -sfT ../../rolldown node_modules/.pnpm/node_modules/rolldown
-
-    # The runtime-postbuild script calls stageBundledPluginRuntimeDeps which
-    # runs "npm install" for bundled plugin runtime dependencies, requiring
-    # network access.  Patch it out for the sandbox build — plugin runtime
-    # deps are not needed for the main openclaw CLI.
-    substituteInPlace scripts/runtime-postbuild.mjs \
-      --replace-fail \
-        'runPhase("bundled plugin runtime deps", () => stageBundledPluginRuntimeDeps(params));' \
-        '/* runPhase("bundled plugin runtime deps", () => stageBundledPluginRuntimeDeps(params)); — disabled in Nix build */'
   '';
 
   buildPhase = ''
