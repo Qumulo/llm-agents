@@ -97,6 +97,7 @@ python3.pkgs.buildPythonApplication (finalAttrs: {
   dependencies = with python3.pkgs; [
     click
     colorama
+    filelock
     gitpython
     llm
     llm-github-models
