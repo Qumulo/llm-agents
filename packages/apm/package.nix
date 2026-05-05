@@ -80,14 +80,14 @@ let
 in
 python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "apm";
-  version = "0.12.0";
+  version = "0.12.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "microsoft";
     repo = "apm";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-yugFtWPSOIzd65zHyMADgSgQNYFw4o0lfMPiPhO8Lzc=";
+    hash = "sha256-+acFSRNRiMojPbsZ5IqlVAyUaaG2q9zvYzk5oaA6MaA=";
   };
 
   build-system = with python3.pkgs; [
@@ -97,6 +97,7 @@ python3.pkgs.buildPythonApplication (finalAttrs: {
   dependencies = with python3.pkgs; [
     click
     colorama
+    filelock
     gitpython
     llm
     llm-github-models
