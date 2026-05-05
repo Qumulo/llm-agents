@@ -151,6 +151,29 @@ let
     '';
   };
 
+  # `hermes dashboard` serves a Vite app from hermes_cli/web_dist. Build it
+  # ahead of time and point the wrapper at the immutable output so packaged
+  # installs never try to build frontend assets at runtime.
+  hermes-web = buildNpmPackage {
+    pname = "hermes-web";
+    inherit version;
+    src = "${src}/web";
+    npmDepsHash = "sha256-HWB1piIPglTXbzQHXFYHLgVZIbDb60esupXSQGa1+lI=";
+
+    buildPhase = ''
+      runHook preBuild
+      npm run build -- --outDir "$TMPDIR/web-dist"
+      runHook postBuild
+    '';
+
+    installPhase = ''
+      runHook preInstall
+      mkdir -p $out/share/hermes-web
+      cp -r "$TMPDIR/web-dist"/. $out/share/hermes-web/
+      runHook postInstall
+    '';
+  };
+
   hermesDeps =
     with python3.pkgs;
     [
@@ -252,6 +275,9 @@ python3.pkgs.buildPythonApplication {
     "HERMES_TUI_DIR"
     "${hermes-tui}/lib/hermes-tui"
     "--set"
+    "HERMES_WEB_DIST"
+    "${hermes-web}/share/hermes-web"
+    "--set"
     "HERMES_PYTHON"
     "${pythonEnv}/bin/python3"
     "--set"
@@ -291,14 +317,16 @@ python3.pkgs.buildPythonApplication {
   # #4364: wrapper must wire up the TUI and a deps-capable gateway python.
   postInstallCheck = ''
     grep -q HERMES_TUI_DIR $out/bin/hermes
+    grep -q HERMES_WEB_DIST $out/bin/hermes
     grep -q HERMES_PYTHON $out/bin/hermes
     test -f ${hermes-tui}/lib/hermes-tui/dist/entry.js
+    test -f ${hermes-web}/share/hermes-web/index.html
     ${pythonEnv}/bin/python3 -c 'import dotenv, tenacity, openai'
   '';
 
   passthru = {
     category = "AI Assistants";
-    inherit hermes-tui;
+    inherit hermes-tui hermes-web;
   };
 
   meta = with lib; {
