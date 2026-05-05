@@ -15,18 +15,18 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "openclaw";
-  version = "2026.4.29";
+  version = "2026.5.3";
 
   src = fetchFromGitHub {
     owner = "openclaw";
     repo = "openclaw";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-AlQiCL2cNlrtHBzFriwVuAD+E4j694fEvgPuC2xc8N0=";
+    hash = "sha256-6WIjb/0dFuGPtXnzpUCrkZ7RYEiRttOTc9Jc0OKbfdE=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-gtW5+rO5gnKfI2zsPVj2LWrJ2glOTXzk60DUZUbYU7E=";
+    hash = "sha256-lu5ykH91YytflGi6OOx52jks5MaoSecs6nVIVjO4wtw=";
     fetcherVersion = 2;
   };
 
@@ -58,15 +58,6 @@ stdenv.mkDerivation (finalAttrs: {
     fi
     mkdir -p node_modules/.pnpm/node_modules
     ln -sfT ../../rolldown node_modules/.pnpm/node_modules/rolldown
-
-    # The runtime-postbuild script calls stageBundledPluginRuntimeDeps which
-    # runs "npm install" for bundled plugin runtime dependencies, requiring
-    # network access.  Patch it out for the sandbox build — plugin runtime
-    # deps are not needed for the main openclaw CLI.
-    substituteInPlace scripts/runtime-postbuild.mjs \
-      --replace-fail \
-        'runPhase("bundled plugin runtime deps", () => stageBundledPluginRuntimeDeps(params));' \
-        '/* runPhase("bundled plugin runtime deps", () => stageBundledPluginRuntimeDeps(params)); — disabled in Nix build */'
   '';
 
   buildPhase = ''
@@ -130,7 +121,7 @@ stdenv.mkDerivation (finalAttrs: {
     versionCheckHook
     versionCheckHomeHook
   ];
-  # Upstream tags may carry a "-N" rebuild suffix (e.g. v2026.4.29) while
+  # Upstream tags may carry a "-N" rebuild suffix (e.g. v2026.5.3) while
   # `openclaw --version` only reports the base version. Strip the suffix
   # before versionCheckHook compares it against the command output.
   preVersionCheck = ''
