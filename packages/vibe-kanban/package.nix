@@ -14,6 +14,7 @@
   libgit2,
   sqlite,
   llvmPackages,
+  perl,
 }:
 
 let
@@ -69,21 +70,23 @@ let
       # Extract the react-virtuoso license key from upstream's pre-built
       # release assets rather than storing it in our repository.
       export VITE_PUBLIC_REACT_VIRTUOSO_LICENSE_KEY=$(
-        unzip -p ${releaseZip} '*/assets/index-*.js' \
+        unzip -p ${releaseZip} '*/dist/assets/index-*.js' \
           | grep -o 'licenseKey:"[^"]*"' \
           | head -1 \
           | cut -d'"' -f2
       )
 
-      cd frontend
-      pnpm build
+      # 0.1.44 reshapes the source tree into a pnpm workspace under
+      # `packages/`. The local browser frontend (formerly `frontend/`)
+      # now lives at `packages/local-web/` as the @vibe/local-web package.
+      pnpm --filter @vibe/local-web build
       runHook postBuild
     '';
 
     installPhase = ''
       runHook preInstall
       mkdir -p $out
-      cp -r dist/* $out/
+      cp -r packages/local-web/dist/* $out/
       runHook postInstall
     '';
   };
@@ -98,12 +101,18 @@ rustPlatform.buildRustPackage {
     "--package"
     "server"
     "--package"
+    "mcp"
+    "--package"
     "review"
   ];
 
   nativeBuildInputs = [
     pkg-config
     llvmPackages.libclang
+    # crates/executors enables openssl's `vendored` feature for musl
+    # cross-compile builds, which forces a from-source openssl build that
+    # needs perl regardless of the host openssl present in buildInputs.
+    perl
   ];
   buildInputs = [
     openssl
@@ -111,10 +120,11 @@ rustPlatform.buildRustPackage {
     sqlite
   ];
 
-  # Copy frontend assets before Rust build
+  # Copy frontend assets before Rust build. crates/server's build.rs and
+  # rust_embed both reference `../../packages/local-web/dist`.
   preBuild = ''
-    mkdir -p frontend/dist
-    cp -r ${frontend}/* frontend/dist/
+    mkdir -p packages/local-web/dist
+    cp -r ${frontend}/* packages/local-web/dist/
   '';
 
   env = {
@@ -125,8 +135,9 @@ rustPlatform.buildRustPackage {
   doCheck = false;
 
   postInstall = ''
+    # Upstream's `mcp` crate already declares its bin as `vibe-kanban-mcp`
+    # in 0.1.44; only `server` and `review` still need renaming.
     mv $out/bin/server $out/bin/vibe-kanban
-    mv $out/bin/mcp_task_server $out/bin/vibe-kanban-mcp
     mv $out/bin/review $out/bin/vibe-kanban-review
     rm -f $out/bin/generate_types
     rm -rf $out/bin/*.dSYM
