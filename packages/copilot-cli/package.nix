@@ -13,11 +13,11 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "copilot-cli";
-  version = "1.0.41";
+  version = "1.0.42";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/@github/copilot/-/copilot-${finalAttrs.version}.tgz";
-    hash = "sha256-RK5d/uVfLWAr0c63gX8vE0Ys3KPzW+H/9EC0QvE7UuE=";
+    hash = "sha256-XHVrK5QNcIdshbWWByANsHHa+yXYAlFPKDdUK2shElc=";
   };
 
   nativeBuildInputs = [ makeWrapper ] ++ lib.optionals stdenv.hostPlatform.isLinux [ wrapBuddy ];
