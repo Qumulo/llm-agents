@@ -7,13 +7,13 @@
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "zat";
-  version = "0.5.3";
+  version = "0.5.4";
 
   src = fetchFromGitHub {
     owner = "bglgwyng";
     repo = "zat";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-B/DT8hdtOds9d/od5QInuRu5rBprxzJOfbuj3LkGCvk=";
+    hash = "sha256-HFFVsfbT5syDxKO8ECPBIHqzJxIKAvp7X7O7Cji2Sxk=";
   };
 
   cargoHash = "sha256-VSu68KPkoOLyva+A3+TtdTg48xZg0LNenMq+z9xoAVU=";
