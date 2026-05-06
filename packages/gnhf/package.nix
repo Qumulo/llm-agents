@@ -9,16 +9,16 @@
 
 buildNpmPackage rec {
   pname = "gnhf";
-  version = "0.1.37";
+  version = "0.1.40";
 
   src = fetchFromGitHub {
     owner = "kunchenguid";
     repo = "gnhf";
     rev = "gnhf-v${version}";
-    hash = "sha256-TKCbiLx8pce5LrD/kGOwJg9SjfgqhQxLcCQlzDf+les=";
+    hash = "sha256-tDY5iTYlLWu935dgh56677K1tk3hfXCnmjQzs1R0Y8A=";
   };
 
-  npmDepsHash = "sha256-fxbgscj06V8iHlWYzO2Iz2Wwt9NnfAzG0gPSmZI7JC8=";
+  npmDepsHash = "sha256-4DqBZc05GRvAI05nZBc7pDCemAOJ+8MuexF6H/86PaU=";
 
   doInstallCheck = true;
   nativeInstallCheckInputs = [
