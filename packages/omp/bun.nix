@@ -2022,9 +2022,9 @@
     url = "https://registry.npmjs.org/strip-ansi/-/strip-ansi-7.2.0.tgz";
     hash = "sha512-yDPMNjp4WyfYBkHnjIRLfca1i6KMyGCtsVgoKe/z1+6vukgaENdgGBZt+ZmKPc4gavvEZ5OgHfHdrazhgNyG7w==";
   };
-  "strnum@2.2.3" = fetchurl {
-    url = "https://registry.npmjs.org/strnum/-/strnum-2.2.3.tgz";
-    hash = "sha512-oKx6RUCuHfT3oyVjtnrmn19H1SiCqgJSg+54XqURKp5aCMbrXrhLjRN9TjuwMjiYstZ0MzDrHqkGZ5dFTKd+zg==";
+  "strnum@2.3.0" = fetchurl {
+    url = "https://registry.npmjs.org/strnum/-/strnum-2.3.0.tgz";
+    hash = "sha512-ums3KNd42PGyx5xaoVTO1mjU1bH3NpY4vsrVlnv9PNGqQj8wd7rJ6nEypLrJ7z5vxK5RP0yMLo6J/Gsm62DI5Q==";
   };
   "strtok3@10.3.5" = fetchurl {
     url = "https://registry.npmjs.org/strtok3/-/strtok3-10.3.5.tgz";
