@@ -21,14 +21,13 @@ def regenerate_bun_nix(
 ) -> None:
     """Regenerate a bun.nix file from a bun.lock using bun2nix.
 
-    Runs bun2nix directly from the flake's bun2nix input via
-    ``nix run --inputs-from``, which handles building and caching
-    the binary automatically.
+    Runs the flake's own ``bun2nix`` package, which is available from the
+    binary cache.
 
     Args:
         bun_lock_path: Path to the bun.lock file
         bun_nix_output: Path where bun.nix should be written
-        flake_root: Root directory of the flake (to resolve bun2nix input)
+        flake_root: Root directory of the flake (provides the bun2nix package)
 
     Raises:
         RuntimeError: If bun2nix fails
@@ -39,9 +38,7 @@ def regenerate_bun_nix(
             [
                 "nix",
                 "run",
-                "--inputs-from",
-                str(flake_root),
-                "bun2nix#bun2nix",
+                f"{flake_root}#bun2nix",
                 "--",
                 "--lock-file",
                 str(bun_lock_path),
