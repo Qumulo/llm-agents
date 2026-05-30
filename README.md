@@ -963,6 +963,16 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 
 </details>
 <details>
+<summary><strong>memvid-cli</strong> - AI memory CLI - crash-safe, single-file storage with semantic search</summary>
+
+- **Source**: binary
+- **License**: Apache-2.0
+- **Homepage**: https://memvid.com
+- **Usage**: `nix run github:numtide/llm-agents.nix#memvid-cli -- --help`
+- **Nix**: [packages/memvid-cli/package.nix](packages/memvid-cli/package.nix)
+
+</details>
+<details>
 <summary><strong>nono</strong> - Kernel-enforced agent sandbox. Capability-based isolation with secure key management, atomic rollback, cryptographic immutable audit chain of provenance. Run your agents in a zero-trust environment.</summary>
 
 - **Source**: source
