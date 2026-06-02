@@ -601,7 +601,7 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 
 - **Source**: source
 - **License**: Apache-2.0
-- **Homepage**: https://github.com/chernistry/bernstein
+- **Homepage**: https://github.com/sipyourdrink-ltd/bernstein
 - **Usage**: `nix run github:numtide/llm-agents.nix#bernstein -- --help`
 - **Nix**: [packages/bernstein/package.nix](packages/bernstein/package.nix)
 
