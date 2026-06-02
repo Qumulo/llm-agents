@@ -7,7 +7,7 @@
   makeBinaryWrapper,
   nodejs-slim,
   pnpmConfigHook,
-  pnpm_10,
+  pnpm_11,
   rustPlatform,
   stdenv,
 }:
@@ -36,15 +36,15 @@ let
 
     nativeBuildInputs = [
       nodejs-slim
-      pnpm_10
+      pnpm_11
       pnpmConfigHook
     ];
 
     pnpmDeps = fetchPnpmDeps {
       pname = "${pname}-dashboard";
       inherit version src;
-      pnpm = pnpm_10;
-      hash = "sha256-xNxNFvaw5sdX0ZaBIUf449wIHQNifMPK3I+qi+yp+UU=";
+      pnpm = pnpm_11;
+      hash = "sha256-hSmlZvGlnvSWpCki1eImUNEe1myfbC3eDVcX07k0Bm4=";
       fetcherVersion = 3;
     };
 
