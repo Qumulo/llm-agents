@@ -7,6 +7,7 @@
   fetchPypi,
   buildNpmPackage,
   nodejs,
+  olm,
   versionCheckHook,
   versionCheckHomeHook,
 }:
@@ -208,6 +209,16 @@ let
   # Upstream extras only warn-and-disable at runtime when missing (#4175), so
   # ship every extra nixpkgs has. Not yet packaged: honcho, daytona, dingtalk,
   # feishu.
+  # libolm is marked insecure in nixpkgs (deprecated by Matrix.org; timing
+  # side-channels in its AES/SHA primitives). Cleared so mautrix[encryption]
+  # can provide Matrix E2EE — same accepted trade-off as picoclaw, and E2EE
+  # only loads when the user sets MATRIX_E2EE_MODE (default off).
+  clearedOlm = olm.overrideAttrs (old: {
+    meta = old.meta // {
+      knownVulnerabilities = [ ];
+    };
+  });
+
   optionalDeps = with python3.pkgs; {
     gateway = [
       # [messaging] / [slack]
@@ -225,10 +236,19 @@ let
       markdown
     ]
     ++ lib.optionals stdenv.hostPlatform.isLinux [
-      # [matrix] — python-olm broken on macOS upstream.
+      # [matrix] — the full mautrix[encryption] stack for E2EE. nixpkgs'
+      # mautrix ships without the encryption extra, so pull its four crypto
+      # deps explicitly (python-olm + unpaddedbase64 + pycryptodome +
+      # base58); without them `from mautrix.crypto import OlmMachine` fails.
+      # libolm only builds on Linux.
       mautrix
+      (python-olm.override { olm = clearedOlm; })
+      unpaddedbase64
+      pycryptodome
+      base58
       aiosqlite
       asyncpg
+      aiohttp-socks
     ];
     misc = [
       # [cli]
@@ -266,6 +286,22 @@ python3.pkgs.buildPythonApplication {
     setuptools
   ];
 
+  # Hermes lazy-installs optional extras at runtime by exact-pinning them
+  # against PyPI: tools/lazy_deps.py:_is_satisfied runs
+  # `Version(installed) in SpecifierSet("==X.Y.Z")`, and on any drift it tries
+  # to `pip install` into the (read-only) store, fails, and silently disables
+  # the feature. nixpkgs aiosqlite is 0.21.0 while hermes pins 0.22.1, which is
+  # exactly what disabled the matrix adapter ("required packages not
+  # installed"). In a Nix package every dep is already resolved into the
+  # closure by the package manager, so presence (importlib.metadata) is a
+  # sufficient satisfier — drop the version half of the check.
+  # HERMES_DISABLE_LAZY_INSTALLS below makes genuinely-absent extras fail
+  # cleanly instead of attempting a doomed store write.
+  postPatch = ''
+    substituteInPlace tools/lazy_deps.py \
+      --replace-fail 'Version(installed) in SpecifierSet(spec_tail)' 'True'
+  '';
+
   dependencies = hermesDeps;
   optional-dependencies = optionalDeps;
 
@@ -285,6 +321,12 @@ python3.pkgs.buildPythonApplication {
     "--set"
     "HERMES_NODE"
     "${nodejs}/bin/node"
+    # Every extra ships in the closure; never attempt runtime `pip install`
+    # into the read-only store. Missing extras disable cleanly (warning)
+    # instead of failing a doomed install.
+    "--set"
+    "HERMES_DISABLE_LAZY_INSTALLS"
+    "1"
     # node+npm on PATH short-circuits _ensure_tui_node()'s download bootstrap.
     "--prefix"
     "PATH"
@@ -335,6 +377,12 @@ python3.pkgs.buildPythonApplication {
     test -f ${hermes-frontend}/lib/hermes-tui/dist/entry.js
     test -f ${hermes-frontend}/share/hermes-web/index.html
     ${pythonEnv}/bin/python3 -c 'import dotenv, tenacity, openai'
+  ''
+  + lib.optionalString stdenv.hostPlatform.isLinux ''
+    # Matrix E2EE: python-olm must let mautrix.crypto import, and the
+    # lazy-install disable switch must be wired into the wrapper.
+    ${pythonEnv}/bin/python3 -c 'import mautrix.crypto, asyncpg, aiosqlite'
+    grep -q HERMES_DISABLE_LAZY_INSTALLS $out/bin/hermes
   '';
 
   passthru = {
