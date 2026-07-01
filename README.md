@@ -26,7 +26,6 @@ Nix packages for AI coding agents and development tools. Fork of [numtide/llm-ag
 | [gitclaw](https://github.com/open-gitagent/gitagent) | Universal git-native multimodal AI agent (formerly gitagent) | MIT |
 | [goose-cli](https://github.com/aaif-goose/goose) | CLI for Goose - a local, extensible, open source AI agent that automates engineering tasks | Apache-2.0 |
 | [grok](https://x.ai) | Grok Build, xAI's agentic coding tool | unfree |
-| [iflow-cli](https://github.com/iflow-ai/iflow-cli) | AI coding agent for the terminal with free model access via the iFlow platform | Apache-2.0 |
 | [jules](https://jules.google) | Jules, the asynchronous coding agent from Google, in the terminal | unfree |
 | [junie](https://github.com/JetBrains/junie) | Junie, JetBrains AI coding agent CLI | unfree |
 | [kilocode-cli](https://kilocode.ai/cli) | The open-source AI coding agent. Now available in your terminal. | Apache-2.0 |
