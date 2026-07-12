@@ -151,7 +151,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     description = "Git client for simultaneous branches on top of your existing workflow";
     homepage = "https://gitbutler.com";
     changelog = "https://github.com/gitbutlerapp/gitbutler/releases/tag/release/${finalAttrs.version}";
-    license = licenses.fsl11Mit;
+    license = flake.lib.licenses.fsl11Mit;
     sourceProvenance = with sourceTypes; [ fromSource ];
     maintainers = with flake.lib.maintainers; [ mic92 ];
     mainProgram = "gitbutler-tauri";

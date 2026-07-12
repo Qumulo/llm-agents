@@ -53,13 +53,7 @@
         )
       );
 
-      pkgsFor = eachSystem (
-        system:
-        import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        }
-      );
+      pkgsFor = eachSystem (system: import nixpkgs { inherit system; });
 
       # Every package under packages/, independent of the current platform.
       # Cross-package references go through `perSystem.self.<name>`.

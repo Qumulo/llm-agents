@@ -640,7 +640,7 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 <summary><strong>but</strong> - GitButler CLI - virtual branches and AI-assisted Git workflow from the terminal</summary>
 
 - **Source**: source
-- **License**: Check package
+- **License**: FSL-1.1-MIT
 - **Homepage**: https://github.com/gitbutlerapp/gitbutler
 - **Usage**: `nix run github:numtide/llm-agents.nix#but -- --help`
 - **Nix**: [packages/but/package.nix](packages/but/package.nix)
