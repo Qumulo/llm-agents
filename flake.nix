@@ -60,25 +60,54 @@
       pkgsFor = eachSystem (system: import nixpkgs { inherit system; });
 
       # Every package under packages/, built against the given package set.
-      # Cross-package references go through `perSystem.self.<name>`.
+      #
+      # A package with only a package.nix is called from a scope containing
+      # all in-repo packages plus shared helpers, so dependencies like
+      # `wrapBuddy` or `platformSource` resolve by argument name. A package
+      # with a default.nix is called with { pkgs, perSystem, flake, inputs,
+      # system } as before.
       mkPackagesFor =
         pkgs:
         let
+          system = pkgs.stdenv.hostPlatform.system;
+
+          scope = lib.makeScope pkgs.newScope (
+            self:
+            {
+              inherit flake inputs system;
+              platformSource = import ./lib/platform-source.nix {
+                inherit (pkgs) stdenv fetchurl;
+              };
+              # bun2nix builder set (hook, fetchBunDeps, ...); the `bun2nix`
+              # scope attribute is the CLI package.
+              bun2nixLib = (pkgs.extend inputs.bun2nix.overlays.default).bun2nix;
+            }
+            // lib.genAttrs packageNames (
+              name:
+              let
+                dir = ./packages + "/${name}";
+              in
+              if builtins.pathExists (dir + "/default.nix") then
+                callWith {
+                  inherit
+                    pkgs
+                    perSystem
+                    flake
+                    inputs
+                    system
+                    ;
+                } (import dir)
+              else
+                self.callPackage (dir + "/package.nix") { }
+            )
+          );
+
+          # Only the packages, without the scope plumbing and helpers.
+          packages = lib.genAttrs packageNames (name: scope.${name});
+
           perSystem = {
             self = packages;
           };
-          packages = lib.genAttrs packageNames (
-            name:
-            callWith {
-              inherit
-                pkgs
-                perSystem
-                flake
-                inputs
-                ;
-              system = pkgs.stdenv.hostPlatform.system;
-            } (import (./packages + "/${name}"))
-          );
         in
         packages;
 
